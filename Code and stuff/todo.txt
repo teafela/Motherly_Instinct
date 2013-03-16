@@ -1,0 +1,55 @@
+SUPER TODO
+
+				- Instructions / Readme
+                - Fix ant/egg interaction
+        - Title screen (maybe)
+                - Remove debug stuff
+- Splash
+- Sounds
+  - Web node
+  - Web node fail
+  - Kill Ant
+  - Kill Ant fail
+  - Egg pop
+            - Background music
+  - Initials input (maybe)
+
+
+            - Instructions / readme
+            - Pause Screen    - Done?
+            - Play again (should keep old initials as default)    - Put in - need to test more in case anything broke
+? All Scores page ( show all the scores in the file )
+
+VISUAL:
+
+Polish:
+- Splash                            - In-game screenshot
+                                    - Game Icon (I think?) - Don't need for cabinet
+- High score background picture
+- Adjust some art maybe...
+- New Ant dying animation
+
+CODING:
+
+Behavior:
+- New Ant AI
+-(AI seeking out eggs on screen)
+
+Polish:
+- Web bending
+
+Gameplay / Playtesting:
+- Balancing trapped time (longer is probably better for more tense gameplay)( low chance sudden escapes)
+- Balancing speed (slow it down for bigger webs, more use of screen space)
+- Meter regeneration/charges (both web and venom)
+- Ant spawning speed
+
+
+Mechanics:
+- Laying eggs (more of a chance to survive/ more strategic complexity)
+
+- Ants laying an egg of some sort to release additional enemies ( increase venom decision making since killing off eggs becomes priority, a way to ramp difficulty without boring number increase)  
+
+- Ants carrying eggs off into the edge of the map to take away life (increases web complexity/venom decisionmaking)
+
+- ants following the spider (MEH...)

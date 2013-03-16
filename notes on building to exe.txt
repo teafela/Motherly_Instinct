@@ -1,0 +1,132 @@
+you will need this
+    
+        http://www.pyinstaller.org/
+
+and this
+    
+        http://sourceforge.net/projects/pywin32/
+        
+maybe take a look at this?
+
+        http://www.pygame.org/wiki/Pygame2exe
+
+create a spec file like this
+
+        C:\Users\Scott Todd\Desktop\pyinstaller-2.0>python utils/Makespec.py --onefile "C:\Users\Scott Todd\Desktop\py2exe test\Code and stuff\main.py"
+
+build the .exe like this
+        
+        C:\Users\Scott Todd\Desktop\pyinstaller-2.0>python utils/Build.py main/main.spec
+
+
+include these functions
+
+
+        def resource_path(file):
+            
+            if getattr(sys, 'frozen', None):
+                basedir = sys._MEIPASS
+            else:
+                basedir = os.path.dirname(__file__)
+            
+            return os.path.join(basedir, 'resources', file)
+            
+        def highscore_path():
+            if getattr(sys, 'frozen', None):
+                path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'highscores.txt'))
+            else:
+                path = 'highscores.txt'
+            return path
+    
+    
+use this format for loading resources
+    
+        self.web_base = pygame.image.load(resource_path(os.path.join('HUD', 'web-base.png'))).convert_alpha()
+        
+use this format for the highscores
+
+        if os.path.exists(highscore_path()):
+            with open(highscore_path(), 'r') as f:
+            
+        ...
+            
+        with open(highscore_path(), 'w') as f:
+        
+use this type of main.spec file
+        
+        # -*- mode: python -*-
+        a = Analysis(['C:\\Users\\Scott Todd\\Desktop\\py2exe test\\Code and stuff\\main.py'],
+                     pathex=['C:\\Users\\Scott Todd\\Desktop\\pyinstaller-2.0'],
+                     hiddenimports=[],
+                     hookspath=None)
+        pyz = PYZ(a.pure)
+
+        a.datas += [
+                    ("resources/game-bg.png","C:/Users/Scott Todd/Desktop/py2exe test/Code and stuff/resources/game-bg.png","DATA"),
+                    ("resources/ant.png","C:/Users/Scott Todd/Desktop/py2exe test/Code and stuff/resources/ant.png","DATA"),
+                    ("resources/eggs.png","C:/Users/Scott Todd/Desktop/py2exe test/Code and stuff/resources/eggs.png","DATA"),
+                    ("resources/pause.png","C:/Users/Scott Todd/Desktop/py2exe test/Code and stuff/resources/pause.png","DATA"),
+                    ("resources/web_node.png","C:/Users/Scott Todd/Desktop/py2exe test/Code and stuff/resources/web_node.png","DATA"),
+                    ("resources/spider.png","C:/Users/Scott Todd/Desktop/py2exe test/Code and stuff/resources/spider.png","DATA"),
+                    ("resources/HUD/hud-bg.png","C:/Users/Scott Todd/Desktop/py2exe test/Code and stuff/resources/HUD/hud-bg.png","DATA"),
+                    ("resources/HUD/venom-base.png","C:/Users/Scott Todd/Desktop/py2exe test/Code and stuff/resources/HUD/venom-base.png","DATA"),
+                    ("resources/HUD/venom-fill.png","C:/Users/Scott Todd/Desktop/py2exe test/Code and stuff/resources/HUD/venom-fill.png","DATA"),
+                    ("resources/HUD/web-base.png","C:/Users/Scott Todd/Desktop/py2exe test/Code and stuff/resources/HUD/web-base.png","DATA"),
+                    ("resources/HUD/web-fill.png","C:/Users/Scott Todd/Desktop/py2exe test/Code and stuff/resources/HUD/web-fill.png","DATA"),
+                    ("resources/HUD/Spiderfingers.ttf","C:/Users/Scott Todd/Desktop/py2exe test/Code and stuff/resources/HUD/Spiderfingers.ttf","DATA"),
+                    ("resources/Sounds/spiderling_cast_edited2.wav","C:/Users/Scott Todd/Desktop/py2exe test/Code and stuff/resources/Sounds/spiderling_cast_edited2.wav","DATA"),
+                    ("resources/Sounds/web_cast_edited2.wav","C:/Users/Scott Todd/Desktop/py2exe test/Code and stuff/resources/Sounds/web_cast_edited2.wav","DATA"),
+                    ("resources/Sounds/spiderling_impact_edited2.wav","C:/Users/Scott Todd/Desktop/py2exe test/Code and stuff/resources/Sounds/spiderling_impact_edited2.wav","DATA")
+                   ]
+
+        exe = EXE(pyz,
+                  a.scripts,
+                  a.binaries,
+                  a.zipfiles,
+                  a.datas,
+                  name=os.path.join('dist', 'main.exe'),
+                  debug=False,
+                  strip=None,
+                  upx=True,
+                  console=True )
+                  
+
+the a.datas section can be replaced with python code to fetch each file in resources:
+
+        ------------
+
+        # -*- mode: python -*-
+
+        import os
+        import sys
+        import string
+
+        a = Analysis(['C:\\Users\\Scott Todd\\Documents\\Dropbox\\GameJam-2012-Oct-27\\Code and stuff\\main.py'],
+                     pathex=['C:\\Users\\Scott Todd\\Desktop\\pyinstaller-2.0'],
+                     hiddenimports=[],
+                     hookspath=None)
+        pyz = PYZ(a.pure)
+
+        fileList = []
+        dataList = []
+        rootdir = "C:/Users/Scott Todd/Documents/Dropbox/GameJam-2012-Oct-27/Code and stuff/resources/"
+        for root, subFolders, files in os.walk(rootdir):
+            for file in files:
+                fileList.append(os.path.join(root,file))
+               
+        for file in fileList:
+            dataList.append((os.path.join('resources', string.split(file, rootdir)[1]), file, "DATA"))
+            
+        a.datas += dataList
+
+
+        exe = EXE(pyz,
+                  a.scripts,
+                  a.binaries,
+                  a.zipfiles,
+                  a.datas,
+                  name=os.path.join('dist', 'Motherly Instinct.exe'),
+                  debug=False,
+                  strip=None,
+                  upx=True,
+                  console=True )

@@ -1,0 +1,13 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!DOCTYPE Game SYSTEM "GDCGame.dtd">
+<Game>
+  <title>Motherly Instinct</title>
+  <author>Scott Todd</author>
+  <author>Brian Tam</author>
+  <author>Ronald Sardarian</author>
+  <contact>todds@rpi.edu</contact>
+  <location>motherlyinstinct/main.py</location>
+  <background>motherlyinstinct/resources/splash.png</background>
+  <minPlayers>1</minPlayers>
+  <maxPlayers>1</maxPlayers>
+</Game>
